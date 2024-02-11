@@ -1,10 +1,11 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Message } from '../message.model';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'cms-message-edit',
   templateUrl: './message-edit.component.html',
-  styleUrl: './message-edit.component.css'
+  styleUrls: ['./message-edit.component.css']
 })
 export class MessageEditComponent {
   //  custom EventEmitter to output the new Message object up to the MessageListComponent.
@@ -19,7 +20,7 @@ export class MessageEditComponent {
   currentSender: string = 'Brother LeFoll';
   cdRef: any;
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {}
 
@@ -32,6 +33,7 @@ export class MessageEditComponent {
     const message = new Message('1', subject, msgText, this.currentSender);
     // Call the addMessageEvent.emit() method and pass the new Message object as an argument.
     this.addMessageEvent.emit(message);
+    this.messageService.addMessage(message);
 }
 
   onClear() {
